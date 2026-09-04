@@ -1,0 +1,22 @@
+.app-shell {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.menu {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #ccc;
+  justify-content: center;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #333;
+}
+
+.page { padding: 16px; }
+.modal { border: 1px solid #ccc; padding: 12px; margin: 10px 0; }
+button, input, select { margin: 4px 0; display: block; }

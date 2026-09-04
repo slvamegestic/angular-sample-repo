@@ -1,0 +1,78 @@
+<div class="task-container">
+    <div class="task-header">
+        <h1>{{ today | date }}</h1>
+        <div class="task-actions">
+            <button class="btn" (click)="openAddModal()">Add Todo</button>
+            <button class="btn" (click)="loadTodos()">Refresh</button>
+        </div>
+    </div>
+
+    <div class="filter-bar">
+        <button class="btn btn-small" (click)="setFilter('all')">All</button>
+        <button class="btn btn-small" (click)="setFilter('pending')">Pending</button>
+        <button class="btn btn-small" (click)="setFilter('done')">Done</button>
+    </div>
+
+    @if (isLoading) {
+        <p>Loading...</p>
+    } @else {
+        <div class="todos-list">
+            @for (todo of todos; track todo.id) {
+                <div class="todo-item" [class.completed]="todo.completed">
+                    <input
+                        type="checkbox"
+                        [checked]="todo.completed"
+                        class="checkbox"
+                    />
+
+                    <span class="todo-text">{{ todo.userId }} - {{ todo.title }}</span>
+                    @if (todo.priority) {
+                        <span class="todo-priority">{{ todo.priority }}</span>
+                    }
+                    <span class="todo-priority">
+                        <a [routerLink]="['/task', todo.id]">View Details</a>
+                    </span>
+
+                    <button class="btn btn-small" (click)="openEditModal(todo)">Edit</button>
+                    <button class="btn btn-small btn-danger" (click)="remove(todo)">Delete</button>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@if (showModal) { // commonmodule 
+    <div class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h4 class="modal-title">{{ editingTaskId !== null ? 'Edit Todo' : 'Add Todo' }}</h4>
+                <button type="button" class="close-btn" (click)="closeAddModal()">×</button>
+            </div>
+
+            <form [formGroup]="taskForm" (ngSubmit)="addTodo()">
+            <div class="modal-body">
+
+                <label class="field-label">Todo Title</label>
+                <input type="text" formControlName="title" class="form-control" placeholder="Enter todo title" />
+                
+                @if(taskForm.get('title')?.invalid && taskForm.get('title')?.touched) {
+                    <p class="error">Task name must be at least 5 letters</p>
+                }
+                <label class="field-label">Priority</label>
+                <select formControlName="priority" class="form-control">
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeAddModal()">Cancel</button>
+                <button type="submit" class="btn" [disabled]="taskForm.invalid">
+                    {{ editingTaskId !== null ? 'Update' : 'Save' }}
+                </button>
+            </div>
+            </form>
+        </div>
+    </div>
+}
+

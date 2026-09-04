@@ -1,0 +1,11 @@
+<div class="page container">
+  <h2>Users</h2>
+  <ul>
+    @for (user of users; track user.id) {
+      <li>
+        <a [routerLink]="['/users', user.id]">{{ user.name | titlecase }}</a>
+        <span> - {{ user.email }}</span>
+      </li>
+    }
+  </ul>
+</div>

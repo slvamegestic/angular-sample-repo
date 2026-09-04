@@ -1,0 +1,10 @@
+<div class="page">
+  <h2>Task Details</h2>
+  @if (task) {
+    <p><strong>ID:</strong> {{ task.id }}</p>
+    <p><strong>Title:</strong> {{ task.title | uppercase }}</p>
+    <p><strong>Completed:</strong> {{ task.completed }}</p>
+    <p><strong>Number:</strong> {{ task.id | number }}</p>
+    <a routerLink="">Back to tasks</a>
+  }
+</div>
